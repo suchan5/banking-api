@@ -6,7 +6,6 @@ import com.suchan.banking.entity.Customer;
 import com.suchan.banking.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -63,6 +62,13 @@ public class CustomerService {
                 .name(updatedCustomer.getName())
                 .email(updatedCustomer.getEmail())
                 .build();
+    }
+
+    public void deleteCustomer (Long id) {
+        Customer customerFoundById = customerRepository.findById(id)
+                .orElseThrow();
+
+        customerRepository.delete(customerFoundById);
     }
 
 }
