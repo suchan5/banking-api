@@ -6,6 +6,9 @@ import com.suchan.banking.entity.Customer;
 import com.suchan.banking.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class CustomerService {
@@ -69,6 +72,24 @@ public class CustomerService {
                 .orElseThrow();
 
         customerRepository.delete(customerFoundById);
+    }
+
+    public List<CreateCustomerResponse> getAllCustomers() {
+        List<Customer> customersFound = customerRepository.findAll();
+
+        List<CreateCustomerResponse> customerResponses = new ArrayList<>();
+
+        for (Customer customer : customersFound) {
+            CreateCustomerResponse response = CreateCustomerResponse.builder()
+                    .id(customer.getId())
+                    .name(customer.getName())
+                    .email(customer.getEmail())
+                    .build();
+
+            customerResponses.add(response);
+        }
+
+        return customerResponses;
     }
 
 }

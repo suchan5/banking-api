@@ -5,6 +5,8 @@ import com.suchan.banking.dto.CreateCustomerResponse;
 import com.suchan.banking.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
@@ -35,5 +37,9 @@ public class CustomerController {
         customerService.deleteCustomer(id);
     }
 
+    @GetMapping("/customers/all")
+    public List<CreateCustomerResponse> getAllCustomer() {
+        return customerService.getAllCustomers();
+    }
 
 }
