@@ -3,10 +3,7 @@ package com.suchan.banking.controller;
 import com.suchan.banking.dto.CreateCustomerRequest;
 import com.suchan.banking.dto.CreateCustomerResponse;
 import com.suchan.banking.service.CustomerService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -21,5 +18,10 @@ public class CustomerController {
     @PostMapping("/customers")
     public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequest request) {
         return customerService.createCustomer(request);
+    }
+
+    @GetMapping("/customers/{id}")
+    public CreateCustomerResponse getCustomerById(@PathVariable Long id) {
+        return customerService.getCustomerById(id);
     }
 }

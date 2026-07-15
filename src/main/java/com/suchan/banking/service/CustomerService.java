@@ -6,6 +6,8 @@ import com.suchan.banking.entity.Customer;
 import com.suchan.banking.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomerService {
 
@@ -33,5 +35,16 @@ public class CustomerService {
                 .email(savedCustomer.getEmail())
                 .build();
 
+    }
+
+    public CreateCustomerResponse getCustomerById(Long id) {
+        Customer customerFoundById = customerRepository.findById(id)
+                .orElseThrow();
+
+        return CreateCustomerResponse.builder()
+                .id(customerFoundById.getId())
+                .name(customerFoundById.getName())
+                .email(customerFoundById.getEmail())
+                .build();
     }
 }
