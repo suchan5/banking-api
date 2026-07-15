@@ -47,4 +47,22 @@ public class CustomerService {
                 .email(customerFoundById.getEmail())
                 .build();
     }
+
+    public CreateCustomerResponse updateCustomer(Long id, CreateCustomerRequest request) {
+        Customer customerFoundById = customerRepository.findById(id)
+                .orElseThrow();
+
+        // DB에서 찾은 Customer Entity의 값을 수정
+        customerFoundById.setName(request.getName());
+        customerFoundById.setEmail(request.getEmail());
+
+        Customer updatedCustomer = customerRepository.save(customerFoundById);
+
+        return CreateCustomerResponse.builder()
+                .id(updatedCustomer.getId())
+                .name(updatedCustomer.getName())
+                .email(updatedCustomer.getEmail())
+                .build();
+    }
+
 }
