@@ -3,6 +3,7 @@ package com.suchan.banking.controller;
 import com.suchan.banking.dto.CreateCustomerRequest;
 import com.suchan.banking.dto.CreateCustomerResponse;
 import com.suchan.banking.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class CustomerController {
 
     // @RequestBody: 클라이언트가 보낸 JSON을 CreateCustomerRequest 객체로 바꿔준다.
     @PostMapping("/customers")
-    public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequest request) {
+    public CreateCustomerResponse createCustomer(@Valid @RequestBody CreateCustomerRequest request) {
         return customerService.createCustomer(request);
     }
 
@@ -37,7 +38,7 @@ public class CustomerController {
         customerService.deleteCustomer(id);
     }
 
-    @GetMapping("/customers/all")
+    @GetMapping("/customers")
     public List<CreateCustomerResponse> getAllCustomer() {
         return customerService.getAllCustomers();
     }
