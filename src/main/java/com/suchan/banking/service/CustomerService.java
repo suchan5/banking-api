@@ -3,6 +3,7 @@ package com.suchan.banking.service;
 import com.suchan.banking.dto.CreateCustomerRequest;
 import com.suchan.banking.dto.CreateCustomerResponse;
 import com.suchan.banking.entity.Customer;
+import com.suchan.banking.exception.CustomerNotFoundException;
 import com.suchan.banking.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class CustomerService {
 
     public CreateCustomerResponse getCustomerById(Long id) {
         Customer customerFoundById = customerRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new CustomerNotFoundException(id));
 
         return CreateCustomerResponse.builder()
                 .id(customerFoundById.getId())
@@ -52,7 +53,7 @@ public class CustomerService {
 
     public CreateCustomerResponse updateCustomer(Long id, CreateCustomerRequest request) {
         Customer customerFoundById = customerRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new CustomerNotFoundException(id));
 
         // DB에서 찾은 Customer Entity의 값을 수정
         customerFoundById.setName(request.getName());
@@ -69,7 +70,7 @@ public class CustomerService {
 
     public void deleteCustomer (Long id) {
         Customer customerFoundById = customerRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new CustomerNotFoundException(id));
 
         customerRepository.delete(customerFoundById);
     }
